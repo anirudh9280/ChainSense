@@ -1,21 +1,25 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+from pathlib import Path
+
+DEMO = False
 
 st.set_page_config(page_title="ChainSense", layout="wide")
-
-demo = True
+BASE_DIR = Path(__file__).parent
+DATA_DIR = BASE_DIR / "demo_data" if DEMO else BASE_DIR / ".." / "data" / "processed"
 
 # ---------- Load data ----------
 @st.cache_data
-def load_data():
-    prefix = "demo_data/" if demo else "../data/processed"
-    raw = pd.read_csv(prefix + "wallet_features.csv")
-    scaled = pd.read_csv(prefix + "wallet_features_scaled.csv")
-    txs = pd.read_csv(prefix + "transactions.csv")
-    return raw, scaled, txs
+def load_data(data_dir: Path):
+    raw         = pd.read_csv(data_dir / "wallet_features.csv")
+    scaled      = pd.read_csv(data_dir / "wallet_features_scaled.csv")
+    txs         = pd.read_csv(data_dir / "transactions.csv")
+    clusters    = pd.read_csv(data_dir / "wallet_clusters.csv")
+    projections = pd.read_csv(data_dir / "wallet_projections.csv")
+    return raw, scaled, txs, clusters, projections
 
-raw, scaled, txs = load_data()
+raw, scaled, txs, clusters, projections = load_data(DATA_DIR)
 FEATURE_COLS = [c for c in raw.columns if c != "wallet"]
 
 # ---------- Header ----------
@@ -70,14 +74,57 @@ st.plotly_chart(fig, use_container_width=True)
 
 st.divider()
 
+# ---------- Cluster overview ----------
+st.header("Wallet archetypes")
+st.caption("K-Means (k=4) clustering reveals four behavioral archetypes.")
+
+# Cluster sizes
+arch_counts = clusters["archetype"].value_counts()
+c1, c2, c3, c4 = st.columns(4)
+for col, (arch, count) in zip([c1, c2, c3, c4], arch_counts.items()):
+    col.metric(arch, f"{count:,}", f"{count/len(clusters):.1%}")
+
+# Per-cluster feature profile
+st.subheader("Per-cluster feature profile")
+st.caption("Mean feature values per archetype — what makes each cluster distinct.")
+profile = clusters.groupby("archetype")[FEATURE_COLS].mean().round(2)
+st.dataframe(profile, use_container_width=True)
+
+# PCA scatter colored by archetype
+st.subheader("PCA projection by archetype")
+fig = px.scatter(
+    projections, x="pca1", y="pca2", color="archetype",
+    hover_data=["wallet"], opacity=0.5,
+    color_discrete_sequence=px.colors.qualitative.Set2,
+)
+fig.update_traces(marker=dict(size=4))
+fig.update_layout(height=500)
+st.plotly_chart(fig, use_container_width=True)
+
+# UMAP scatter colored by archetype
+st.subheader("UMAP projection by archetype")
+fig = px.scatter(
+    projections, x="umap1", y="umap2", color="archetype",
+    hover_data=["wallet"], opacity=0.5,
+    color_discrete_sequence=px.colors.qualitative.Set2,
+)
+fig.update_traces(marker=dict(size=4))
+fig.update_layout(height=500)
+st.plotly_chart(fig, use_container_width=True)
+
+st.divider()
+
 # ---------- Wallet lookup ----------
 st.header("Wallet lookup")
 addr = st.text_input("Paste a wallet address (0x...)").strip().lower()
 if addr:
-    match = raw[raw["wallet"].str.lower() == addr]
+    match = clusters[clusters["wallet"].str.lower() == addr]
     if len(match) == 0:
-        st.warning("Wallet not in active set (either not in window, or had <5 events).")
+        st.warning("Wallet not in active set.")
     else:
-        st.success(f"Found. [View on Etherscan](https://etherscan.io/address/{addr})")
-        st.dataframe(match[FEATURE_COLS].T.rename(columns={match.index[0]: "value"}),
-                     use_container_width=True)
+        row = match.iloc[0]
+        st.success(f"**Archetype: {row['archetype']}** · [Etherscan](https://etherscan.io/address/{addr})")
+        st.dataframe(
+            match[FEATURE_COLS].T.rename(columns={match.index[0]: "value"}),
+            use_container_width=True,
+        )
