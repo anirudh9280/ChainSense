@@ -1,22 +1,35 @@
 # ChainSense
 
-  # Features
+> Looking into Behavioral characteristics into Ethereum wallets, revealing archetypes from on-chain transaction patterns.
 
-**total_sent**: total eth sent by wallet
-**total_recieved**: total eth recieved
-**tx_count**: # of transactions sent
-**avg_value_sent** avg eth/transaction
-**avg_gas** avg gas used
-**unique_recipients** # of distinct wallets we intereacted with
-- **send_receive_ratio**: total_sent / total_received (high = distributor, low = holder)
-**tx_frequency**: transaction per active day
-**active_days** # of days wallet has been transacting
+![head](head.png)
 
-  ## Preprocessing
-- Sent and received stats computed separately then merged on wallet address
-- Missing received values filled with 0
-- All features normalized using Scikit learn StandardScaler
+[Live Demo](https://nwpp6w96vwhkizqianttgd.streamlit.app/)
 
-## Outputs
-- transactions.csv – raw transaction data
-- wallet_features.csv – one row per wallet with all features above
+## TL;DR — Key Findings
+- "4 Stable Behavioral Archetypes"
+- TODO
+- TODO 
+
+## What it does
+We wanted to look into transaction data and cluster them into behavioral patterns that provides insight.
+Additionally, we wanted to do anomoly analysis to catch indicators that led to past crashes.
+
+## Architecture
+- TODO: Add simple diagram.. Alchemy → ETL → Features → Clustering → Dashboard
+
+## Results
+- TODO: Brief overview of the 4 archetypes with one-sentence labels each
+- TODO: Link to detailed writeup (the longer doc, see below)
+
+## Tech Stack
+Python, pandas, scikit-learn, hdbscan, umap, Streamlit, Alchemy.
+
+## Getting Started
+TODO: 4-5 commands max. `git clone`, `pip install -r requirements.txt`, set Alchemy key, `python pipeline.py`.
+
+## Project Structure
+TODO: A short tree showing src/, notebooks/, data/, dashboard/.
+
+## What I'd do next
+TODO: 3-5 bullets of "production considerations" — streaming ingestion, supervised classifier extension, etc.
