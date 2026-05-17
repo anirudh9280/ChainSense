@@ -14,8 +14,7 @@ def rpc(method, params, retries=4):
                 json={"jsonrpc": "2.0", "id": 1, "method": method, "params": params},
                 timeout=30,
             )
-            if r.status_code == 429:
-                # rate limited — back off and retry
+            if r.status_code == 429: # "Too many requests" - back off and retry later
                 time.sleep(2 ** attempt)
                 continue
             result = r.json()
