@@ -2,7 +2,7 @@
 
 **Authors:** Chris Kim, Team1, Team2, Team3
 **Course:** DS3 × TQT, Spring 2026
-**Repo:** [github.com/anirudh9280/ChainSense]
+**Repo:** github.com/anirudh9280/ChainSense
 **Date:** [submission date]
 
 ---
