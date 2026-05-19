@@ -1,2 +1,4 @@
-data/
+data/processed/
+data/raw
 .env
+.DS_STORE
