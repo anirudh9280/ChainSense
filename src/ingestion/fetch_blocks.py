@@ -14,7 +14,6 @@ def fetch_blocks(start, end):
     """Pull blocks [start, end] inclusive. Caches each block as JSON on disk."""
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
-
     block_rows, tx_rows = [], []
     t0 = time.time()
 
