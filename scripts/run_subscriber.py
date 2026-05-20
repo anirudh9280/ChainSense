@@ -1,5 +1,6 @@
 import os, asyncio, json, websockets
 from dotenv import load_dotenv
+from pathlib import Path
 
 """CK: very basic subscription using websocketes.
 
@@ -9,14 +10,6 @@ load_dotenv()
 endpoint = f"wss://eth-mainnet.g.alchemy.com/v2/{os.getenv('ALCHEMY_KEY')}"
 payload = '{"id": 1, "method": "eth_subscribe", "params": ["newHeads"]}'
 
-<<<<<<< Updated upstream
-async def main():
-    async with websockets.connect(endpoint) as ws:
-        await ws.send(payload)
-        async for msg in ws:
-            print(json.loads(msg))
-asyncio.run(main())
-=======
 WS_URL = f"wss://eth-mainnet.g.alchemy.com/v2/{os.getenv('ALCHEMY_KEY')}"
 RAW_DIR = Path("data/streaming/raw")
 PROCESSED_DIR = Path("data/streaming")
@@ -141,4 +134,3 @@ if __name__ == "__main__":
     print(f"  Raw JSON  -> {RAW_DIR}")
     print(f"  Parquets  -> {PROCESSED_DIR}")
     asyncio.run(subscribe())
->>>>>>> Stashed changes
