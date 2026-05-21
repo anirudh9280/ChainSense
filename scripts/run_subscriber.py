@@ -17,6 +17,12 @@ from src.ingestion.rpc import rpc
 
 load_dotenv()
 
+async def main():
+    async with websockets.connect(endpoint) as ws:
+        await ws.send(payload)
+        async for msg in ws:
+            print(json.loads(msg))
+asyncio.run(main())
 WS_URL = f"wss://eth-mainnet.g.alchemy.com/v2/{os.getenv('ALCHEMY_KEY')}"
 RAW_DIR = Path("data/streaming/raw")
 PROCESSED_DIR = Path("data/streaming")
