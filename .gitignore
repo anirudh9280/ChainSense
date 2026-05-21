@@ -1,3 +1,4 @@
+data/streaming/
 data/processed/
 data/raw
 .env
