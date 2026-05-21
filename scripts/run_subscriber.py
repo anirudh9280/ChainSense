@@ -9,6 +9,7 @@ Usage:
     python -m scripts.run_subscriber
 """
 import os, json, asyncio, time
+from datetime import datetime, timezone
 import pandas as pd
 import websockets
 from pathlib import Path
@@ -54,14 +55,34 @@ def parse_block(b):
     return block_row, tx_rows
 
 
+def _append_parquet(df, path, dedup_col):
+    """Append rows to an existing parquet file, deduplicating on dedup_col.
+
+    Only reads/rewrites the single (daily) partition file, not the entire
+    history, so cost stays constant as data accumulates over days.
+    """
+    if path.exists():
+        df = pd.concat([pd.read_parquet(path), df]).drop_duplicates(dedup_col)
+    df.to_parquet(path, index=False)
+
+
 def save_block(block_row, tx_rows, raw_block):
-    """Cache raw JSON and append to streaming parquets."""
+    """Cache raw JSON and append to date-partitioned streaming parquets.
+
+    Files are partitioned by date (from the block timestamp) so each day's
+    file stays small and appends are fast:
+        data/streaming/blocks_2026-05-20.parquet
+        data/streaming/transactions_2026-05-20.parquet
+    """
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
     # cache raw JSON
     cache = RAW_DIR / f"block_{block_row['block']}.json"
     cache.write_text(json.dumps(raw_block))
+
+    # derive date partition from block timestamp
+    date_str = datetime.fromtimestamp(block_row["ts"], tz=timezone.utc).strftime("%Y-%m-%d")
 
     # build dataframes
     blocks_df = pd.DataFrame([block_row])
@@ -70,18 +91,11 @@ def save_block(block_row, tx_rows, raw_block):
         tx_df["value_eth"] = tx_df["value_wei"].astype(float) / 1e18
         tx_df["dt"] = pd.to_datetime(tx_df["ts"], unit="s")
 
-    # append to existing parquets, dedup
-    blocks_path = PROCESSED_DIR / "blocks.parquet"
-    tx_path = PROCESSED_DIR / "transactions.parquet"
-
-    if blocks_path.exists():
-        blocks_df = pd.concat([pd.read_parquet(blocks_path), blocks_df]).drop_duplicates("block")
-    blocks_df.to_parquet(blocks_path, index=False)
+    # append to date-partitioned parquets
+    _append_parquet(blocks_df, PROCESSED_DIR / f"blocks_{date_str}.parquet", "block")
 
     if len(tx_df) > 0:
-        if tx_path.exists():
-            tx_df = pd.concat([pd.read_parquet(tx_path), tx_df]).drop_duplicates("tx_hash")
-        tx_df.to_parquet(tx_path, index=False)
+        _append_parquet(tx_df, PROCESSED_DIR / f"transactions_{date_str}.parquet", "tx_hash")
 
 
 async def subscribe():
