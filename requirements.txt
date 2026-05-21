@@ -4,4 +4,4 @@ python-dotenv==1.2.2
 Requests==2.34.2
 streamlit==1.57.0
 dotenv==1.2.2
-
+websockets==15.0.1

@@ -1,17 +1,28 @@
+"""
+WebSocket subscriber — listens for new Ethereum blocks via Alchemy's
+eth_subscribe("newHeads") and fetches the full block + transactions
+using the block hash. Writes to data/streaming/.
+
+Similar to fetch_blocks.py but event-driven instead of batch.
+
+Usage:
+    python -m scripts.run_subscriber
+"""
 import os, json, asyncio, time
 import pandas as pd
 import websockets
 from pathlib import Path
 from dotenv import load_dotenv
 from src.ingestion.rpc import rpc
-"""CK: very basic subscription using websocketes.
-
-"""
 
 load_dotenv()
-endpoint = f"wss://eth-mainnet.g.alchemy.com/v2/{os.getenv('ALCHEMY_KEY')}"
-payload = '{"id": 1, "method": "eth_subscribe", "params": ["newHeads"]}'
 
+async def main():
+    async with websockets.connect(endpoint) as ws:
+        await ws.send(payload)
+        async for msg in ws:
+            print(json.loads(msg))
+asyncio.run(main())
 WS_URL = f"wss://eth-mainnet.g.alchemy.com/v2/{os.getenv('ALCHEMY_KEY')}"
 RAW_DIR = Path("data/streaming/raw")
 PROCESSED_DIR = Path("data/streaming")
@@ -54,12 +65,12 @@ def save_block(block_row, tx_rows, raw_block):
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-    # # cache raw JSON
-    # cache = RAW_DIR / f"block_{block_row['block']}.json"
-    # cache.write_text(json.dumps(raw_block))
+    # cache raw JSON
+    cache = RAW_DIR / f"block_{block_row['block']}.json"
+    cache.write_text(json.dumps(raw_block))
 
     # build dataframes
-    blocks_df = pd.DataFrame([block_row])   
+    blocks_df = pd.DataFrame([block_row])
     tx_df = pd.DataFrame(tx_rows)
     if len(tx_df) > 0:
         tx_df["value_eth"] = tx_df["value_wei"].astype(float) / 1e18
