@@ -5,3 +5,4 @@ data/raw
 .env
 .DS_STORE
 venv/
+data/bronze
