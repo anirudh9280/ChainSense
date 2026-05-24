@@ -1,7 +1,4 @@
-data/bronze/
-data/streaming/
-data/processed/
-data/raw
+data/
 .env
 .DS_STORE
 venv/
