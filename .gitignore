@@ -1,8 +1,7 @@
 data/bronze/
 data/silver/
+data/gold/
 .env
 .DS_STORE
-venv/
-agg.duckdb
-.venv/.lock
+.venv/
 .python-version
