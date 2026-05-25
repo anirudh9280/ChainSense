@@ -1,6 +1,6 @@
-data/bronze
-data/silver
-data/gold/wallet_features*.parquet
+data/bronze/
+data/silver/
 .env
 .DS_STORE
 venv/
+agg.duckdb
