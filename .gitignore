@@ -4,3 +4,5 @@ data/silver/
 .DS_STORE
 venv/
 agg.duckdb
+.venv/.lock
+.python-version
