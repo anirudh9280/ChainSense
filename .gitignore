@@ -1,4 +1,6 @@
-data/
+data/bronze
+data/silver
+data/gold/wallet_features*.parquet
 .env
 .DS_STORE
 venv/
