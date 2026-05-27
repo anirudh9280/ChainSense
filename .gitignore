@@ -5,3 +5,5 @@ data/gold/
 .DS_STORE
 .venv/
 .python-version
+streaming/
+__pycache__/
