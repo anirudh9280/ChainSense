@@ -7,3 +7,5 @@ data/gold/
 .python-version
 streaming/
 __pycache__/
+analyst_data/
+notebooks/
