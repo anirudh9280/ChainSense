@@ -1,0 +1,18 @@
+[project]
+name = "ucsd-chainsense"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "db-dtypes>=1.4.4",
+    "google-cloud-bigquery>=3.41.0",
+    "pandas>=3.0.3",
+    "pd>=0.0.4",
+    "pyarrow>=24.0.0",
+    "python-dotenv>=1.2.2",
+    "web3>=7.16.0",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.2.0",
+]
