@@ -19,3 +19,4 @@ web/tsconfig.tsbuildinfo
 web/dist/
 .vite/
 dashboard/public/activity_timeseries.json
+/backend/data
