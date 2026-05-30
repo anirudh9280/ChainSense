@@ -1,17 +1,9 @@
-import type { Snapshot } from "../lib/snapshot";
+import { familyColor } from "../lib/families";
 
-const colorMap: Record<string, string> = {
-  longterm: "#54E0A8",
-  traders:  "#5BB6F0",
-  nft:      "#B488F0",
-  bots:     "#F0A24A",
-};
+export type PopTxnRow = { name: string; pctWallets: number; pctTxns: number };
 
-export default function PopulationVsTransactions({
-  rows,
-}: {
-  rows: Snapshot["archetypes"];
-}) {
+export default function PopulationVsTransactions({ rows }: { rows: PopTxnRow[] }) {
+  const max = Math.max(...rows.flatMap((r) => [r.pctWallets, r.pctTxns]), 1);
   return (
     <div className="rounded-xl border border-border bg-panel/60 px-6 py-5">
       <div className="flex items-baseline justify-between">
@@ -19,14 +11,15 @@ export default function PopulationVsTransactions({
           POPULATION VS. TRANSACTION SHARE
         </div>
         <div className="flex items-center gap-3 text-[10.5px] text-muted">
-          <Legend swatch="bg-sky-400/70" label="% of wallets" />
-          <Legend swatch="bg-emerald-400/70" label="% of transactions" />
+          <Legend dim={false} label="% wallets" />
+          <Legend dim label="% transactions" />
         </div>
       </div>
 
       <div className="mt-5 space-y-5">
         {rows.map((r) => {
-          const c = colorMap[r.color] ?? "#888";
+          const c = familyColor(r.name);
+          const skew = r.pctWallets > 0 ? r.pctTxns / r.pctWallets : 0;
           return (
             <div key={r.name}>
               <div className="mb-2 flex items-center justify-between text-[12.5px]">
@@ -38,13 +31,16 @@ export default function PopulationVsTransactions({
                   {r.name}
                 </span>
                 <span className="font-num text-muted">
-                  <span className="text-sky-300">{r.pct.toFixed(1)}%</span>
-                  {" wallets  ·  "}
-                  <span className="text-emerald-300">{r.txnSharePct.toFixed(1)}%</span>
+                  <span style={{ color: c }}>{r.pctWallets.toFixed(1)}%</span>
+                  {" wallets · "}
+                  <span className="text-fg">{r.pctTxns.toFixed(1)}%</span>
                   {" txns"}
+                  {skew >= 1.6 && (
+                    <span className="ml-2 text-amber-300">{skew.toFixed(1)}× active</span>
+                  )}
                 </span>
               </div>
-              <PairBar pct={r.pct} txn={r.txnSharePct} />
+              <PairBar pct={r.pctWallets} txn={r.pctTxns} max={max} color={c} />
             </div>
           );
         })}
@@ -53,23 +49,42 @@ export default function PopulationVsTransactions({
   );
 }
 
-function PairBar({ pct, txn }: { pct: number; txn: number }) {
+function PairBar({
+  pct,
+  txn,
+  max,
+  color,
+}: {
+  pct: number;
+  txn: number;
+  max: number;
+  color: string;
+}) {
   return (
     <div className="space-y-1">
       <div className="h-[5px] w-full overflow-hidden rounded-full bg-borderSoft">
-        <div className="h-full bg-sky-400/80" style={{ width: `${pct}%` }} />
+        <div
+          className="h-full rounded-full"
+          style={{ width: `${(pct / max) * 100}%`, background: color }}
+        />
       </div>
       <div className="h-[5px] w-full overflow-hidden rounded-full bg-borderSoft">
-        <div className="h-full bg-emerald-400/80" style={{ width: `${txn}%` }} />
+        <div
+          className="h-full rounded-full"
+          style={{ width: `${(txn / max) * 100}%`, background: color, opacity: 0.4 }}
+        />
       </div>
     </div>
   );
 }
 
-function Legend({ swatch, label }: { swatch: string; label: string }) {
+function Legend({ dim, label }: { dim: boolean; label: string }) {
   return (
     <span className="flex items-center gap-1.5">
-      <span className={`h-[3px] w-4 rounded-full ${swatch}`} />
+      <span
+        className="h-[3px] w-4 rounded-full bg-fg"
+        style={{ opacity: dim ? 0.35 : 0.8 }}
+      />
       {label}
     </span>
   );

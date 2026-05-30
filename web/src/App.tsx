@@ -11,12 +11,12 @@ export default function App() {
   return (
     <Routes>
       <Route element={<AppShell />}>
-        <Route index element={<Overview />} />
+        <Route index element={<RealtimeClassifier />} />
+        <Route path="cluster-analysis" element={<Overview />} />
         <Route path="archetypes" element={<Archetypes />} />
         <Route path="feature-space" element={<FeatureSpace />} />
         <Route path="wallets" element={<Wallets />} />
         <Route path="anomaly" element={<AnomalyDetection />} />
-        <Route path="classifier" element={<RealtimeClassifier />} />
       </Route>
     </Routes>
   );

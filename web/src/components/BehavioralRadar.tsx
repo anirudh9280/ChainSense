@@ -1,26 +1,29 @@
 import { useState } from "react";
-import { ARCH_COLOR_HEX } from "../lib/snapshot";
 
-type FP = {
-  archetype: string;
+export type RadarFamily = {
+  name: string;
   color: string;
-  axes: Record<string, number>;
+  radar: Record<string, number>; // normalized 0–1 per axis
 };
 
-const W = 460;
-const H = 420;
+const W = 480;
+const H = 440;
 const CX = W / 2;
-const CY = H / 2 + 10;
-const R = 150;
+const CY = H / 2 + 6;
+const R = 148;
 
 export default function BehavioralRadar({
   axes,
-  fingerprints,
+  families,
+  defaultVisible,
 }: {
   axes: string[];
-  fingerprints: FP[];
+  families: RadarFamily[];
+  defaultVisible?: string[];
 }) {
-  const [hidden, setHidden] = useState<Set<string>>(new Set());
+  const initial = new Set(defaultVisible ?? families.map((f) => f.name));
+  const [visible, setVisible] = useState<Set<string>>(initial);
+  const [focus, setFocus] = useState<string | null>(null);
   const n = axes.length;
 
   const angle = (i: number) => -Math.PI / 2 + (i * 2 * Math.PI) / n;
@@ -30,6 +33,8 @@ export default function BehavioralRadar({
   };
 
   const rings = [0.25, 0.5, 0.75, 1];
+  const shown = families.filter((f) => visible.has(f.name));
+  const focused = focus && visible.has(focus) ? families.find((f) => f.name === focus) : null;
 
   return (
     <div className="rounded-xl border border-border bg-panel/60 p-5">
@@ -37,75 +42,63 @@ export default function BehavioralRadar({
         BEHAVIORAL FINGERPRINTS
       </div>
       <div className="mt-1 text-[11.5px] text-muted">
-        normalized feature intensity per archetype (0–1) · click a label to
-        toggle
+        median profile per family, normalized 0–1 per axis · click a family to toggle, hover to isolate
       </div>
 
-      <svg viewBox={`0 0 ${W} ${H}`} className="mt-3 w-full" style={{ maxHeight: H }}>
-        {/* concentric rings */}
+      <svg viewBox={`0 0 ${W} ${H}`} className="mt-2 w-full" style={{ maxHeight: H }}>
         {rings.map((r) => (
           <polygon
             key={r}
-            points={axes
-              .map((_, i) => {
-                const [x, y] = pt(i, R * r);
-                return `${x},${y}`;
-              })
-              .join(" ")}
+            points={axes.map((_, i) => pt(i, R * r).join(",")).join(" ")}
             fill="none"
             stroke="rgba(255,255,255,0.06)"
           />
         ))}
-        {/* axis lines */}
         {axes.map((_, i) => {
           const [x, y] = pt(i, R);
+          return <line key={i} x1={CX} y1={CY} x2={x} y2={y} stroke="rgba(255,255,255,0.05)" />;
+        })}
+
+        {shown.map((f) => {
+          const dim = focus && focus !== f.name;
+          const pts = axes
+            .map((axisName, i) => pt(i, R * (f.radar[axisName] ?? 0)).join(","))
+            .join(" ");
           return (
-            <line
-              key={i}
-              x1={CX}
-              y1={CY}
-              x2={x}
-              y2={y}
-              stroke="rgba(255,255,255,0.05)"
-            />
+            <g
+              key={f.name}
+              style={{ cursor: "pointer", transition: "opacity 120ms" }}
+              opacity={dim ? 0.12 : 1}
+              onMouseEnter={() => setFocus(f.name)}
+              onMouseLeave={() => setFocus(null)}
+            >
+              <polygon
+                points={pts}
+                fill={f.color}
+                fillOpacity={focus === f.name ? 0.2 : 0.1}
+                stroke={f.color}
+                strokeWidth={focus === f.name ? 2.2 : 1.5}
+              />
+              {axes.map((axisName, i) => {
+                const [x, y] = pt(i, R * (f.radar[axisName] ?? 0));
+                return <circle key={i} cx={x} cy={y} r={focus === f.name ? 3 : 2.2} fill={f.color} />;
+              })}
+            </g>
           );
         })}
 
-        {/* archetype polygons */}
-        {fingerprints
-          .filter((fp) => !hidden.has(fp.archetype))
-          .map((fp) => {
-            const color = ARCH_COLOR_HEX[fp.color] ?? "#888";
-            const pts = axes
-              .map((axisName, i) => {
-                const v = fp.axes[axisName] ?? 0;
-                const [x, y] = pt(i, R * v);
-                return `${x},${y}`;
-              })
-              .join(" ");
-            return (
-              <g key={fp.archetype}>
-                <polygon points={pts} fill={color} fillOpacity={0.12} stroke={color} strokeWidth="1.6" />
-                {axes.map((axisName, i) => {
-                  const v = fp.axes[axisName] ?? 0;
-                  const [x, y] = pt(i, R * v);
-                  return <circle key={i} cx={x} cy={y} r={2.4} fill={color} />;
-                })}
-              </g>
-            );
-          })}
-
-        {/* axis labels */}
         {axes.map((label, i) => {
-          const [x, y] = pt(i, R + 22);
+          const [x, y] = pt(i, R + 24);
+          const c = Math.cos(angle(i));
+          const anchor = c > 0.3 ? "start" : c < -0.3 ? "end" : "middle";
           return (
             <text
               key={label}
               x={x}
               y={y}
-              fontSize="10"
+              fontSize="10.5"
               fill="#8A8FA0"
-              textAnchor="middle"
+              textAnchor={anchor}
               dominantBaseline="middle"
               fontFamily="Inter, system-ui"
             >
@@ -115,28 +108,45 @@ export default function BehavioralRadar({
         })}
       </svg>
 
-      <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px]">
-        {fingerprints.map((fp) => {
-          const c = ARCH_COLOR_HEX[fp.color] ?? "#888";
-          const off = hidden.has(fp.archetype);
+      <div className="mt-1 flex min-h-[2.25rem] items-center justify-center text-center text-[11px] leading-snug text-muted">
+        {focused ? (
+          <span>
+            <span className="font-semibold" style={{ color: focused.color }}>
+              {focused.name}
+            </span>
+            {" — "}
+            {axes
+              .map((a) => `${a} ${(focused.radar[a] ?? 0).toFixed(2)}`)
+              .join(" · ")}
+          </span>
+        ) : (
+          <span className="text-mutedSoft">hover a family to read its axis values</span>
+        )}
+      </div>
+
+      <div className="mt-2 flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1.5 text-[11px]">
+        {families.map((f) => {
+          const off = !visible.has(f.name);
           return (
             <button
-              key={fp.archetype}
-              onClick={() => {
-                setHidden((h) => {
-                  const next = new Set(h);
-                  if (next.has(fp.archetype)) next.delete(fp.archetype);
-                  else next.add(fp.archetype);
+              key={f.name}
+              onMouseEnter={() => setFocus(f.name)}
+              onMouseLeave={() => setFocus(null)}
+              onClick={() =>
+                setVisible((v) => {
+                  const next = new Set(v);
+                  if (next.has(f.name)) next.delete(f.name);
+                  else next.add(f.name);
                   return next;
-                });
-              }}
-              className={`flex items-center gap-1.5 transition ${off ? "opacity-40" : ""}`}
+                })
+              }
+              className={`flex items-center gap-1.5 transition ${off ? "opacity-35" : ""}`}
             >
               <span
                 className="h-2 w-2 rounded-full"
-                style={{ background: c, boxShadow: off ? "none" : `0 0 6px ${c}` }}
+                style={{ background: f.color, boxShadow: off ? "none" : `0 0 6px ${f.color}` }}
               />
-              <span className="text-muted">{fp.archetype}</span>
+              <span className="text-muted">{f.name}</span>
             </button>
           );
         })}
