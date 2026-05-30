@@ -48,27 +48,39 @@ body {
   animation-play-state: paused;
 }
 
-/* One-shot expanding ring stamped at the EKG's leading edge when a new block lands. */
-@keyframes ekg-blip {
-  from {
-    r: 2;
-    opacity: 0.85;
-  }
-  to {
-    r: 13;
-    opacity: 0;
-  }
-}
-.ekg-blip {
-  animation: ekg-blip 0.7s ease-out forwards;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .marquee-track {
     animation: none;
   }
-  .ekg-blip {
-    animation: none;
-    opacity: 0;
-  }
+}
+
+/* AI news digest (Live page "News Feed"): style the raw <ul>/<li>/<a> the model
+   emits for readable contrast on the dark panel. Links are emerald, list text light. */
+.news-html ul {
+  list-style: disc;
+  padding-left: 1.15rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.news-html li {
+  color: #d5d8e2;
+}
+.news-html li::marker {
+  color: rgba(52, 211, 153, 0.65);
+}
+.news-html a {
+  color: #6ee7b7;
+  text-decoration: underline;
+  text-decoration-color: rgba(110, 231, 183, 0.4);
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+.news-html a:hover {
+  color: #a7f3d0;
+}
+.news-html p {
+  margin: 0;
+  color: #d5d8e2;
 }

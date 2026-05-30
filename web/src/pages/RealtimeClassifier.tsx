@@ -1,10 +1,9 @@
 import { type ReactNode } from "react";
 import PageHeader from "../components/PageHeader";
-import InsightBanner from "../components/InsightBanner";
+import NewsFeed from "../components/NewsFeed";
 import LiveStackedChart from "../components/LiveStackedChart";
 import LiveTicker from "../components/LiveTicker";
 import LivePulse from "../components/LivePulse";
-import BlockHeartbeat from "../components/BlockHeartbeat";
 import LogTicker from "../components/LogTicker";
 import { FAMILY_ORDER } from "../lib/families";
 import { useLiveStream } from "../lib/liveStream";
@@ -27,27 +26,13 @@ export default function RealtimeClassifier() {
         status="head − 64 · finalized"
       />
 
-      {/* Live-monitor bar: pulsing LIVE badge + "Ns ago" counter on the left, a
-          block-arrival EKG on the right — the page's visceral "this is live" cue. */}
-      <div className="mt-4 flex flex-col gap-4 rounded-xl border border-border bg-panel/60 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+      {/* Live-monitor bar: pulsing LIVE badge + "Ns ago" counter — the page's "this is live" cue. */}
+      <div className="mt-4 flex items-center rounded-xl border border-border bg-panel/60 px-5 py-3">
         <LivePulse conn={conn} block={block} />
-        <div className="flex items-center gap-3">
-          <span className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-muted">
-            Block heartbeat
-          </span>
-          <BlockHeartbeat blockNumber={block?.number ?? null} live={conn === "live"} />
-        </div>
       </div>
 
       <div className="mt-3">
-        <InsightBanner
-          insight={{
-            tone: conn === "live" ? "good" : conn === "offline" ? "warn" : "info",
-            title: "Enrichment-first — labels are looked up, never guessed",
-            body:
-              "Each finalized block's senders are matched against the 6.3M-wallet lookup table, so known wallets show their precomputed family instantly. Only addresses outside the modeled population fall to the New / Unmodeled bucket; they're never forced into a family.",
-          }}
-        />
+        <NewsFeed />
       </div>
 
       <div className="mt-5">
@@ -66,10 +51,6 @@ export default function RealtimeClassifier() {
         <Tile label="Blocks this session" value={blocksSeen.toLocaleString()} mono />
       </div>
 
-      <div className="mt-3">
-        <LiveStackedChart history={history} families={STACK_FAMILIES} />
-      </div>
-
       <div className="mt-3 rounded-xl border border-border bg-panel/60 p-5">
         <div className="text-[10.5px] font-semibold tracking-[0.18em] text-muted">
           CLASSIFICATION LOG · most recent senders
@@ -77,6 +58,10 @@ export default function RealtimeClassifier() {
         <div className="mt-4">
           <LogTicker rows={log} />
         </div>
+      </div>
+
+      <div className="mt-3">
+        <LiveStackedChart history={history} families={STACK_FAMILIES} />
       </div>
     </div>
   );

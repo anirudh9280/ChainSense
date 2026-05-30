@@ -39,7 +39,7 @@ export default function Sidebar() {
       <div>
         <div className="flex items-center gap-3 px-5 py-5">
           <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-indigo-500/30 to-purple-500/30 ring-1 ring-white/10">
-            <NodesIcon className="h-4 w-4 text-indigo-200" />
+            <img src="/eth.svg" alt="Ethereum" className="h-5 w-5" />
           </div>
           <div className="leading-tight">
             <div className="text-[15px] font-semibold tracking-tight text-fg">
@@ -186,21 +186,6 @@ function AlertIcon({ className = "" }) {
       />
       <path d="M12 10v4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
       <circle cx="12" cy="17" r="0.8" fill="currentColor" />
-    </svg>
-  );
-}
-function NodesIcon({ className = "" }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <circle cx="6" cy="6" r="2" stroke="currentColor" strokeWidth="1.6" />
-      <circle cx="18" cy="6" r="2" stroke="currentColor" strokeWidth="1.6" />
-      <circle cx="12" cy="18" r="2" stroke="currentColor" strokeWidth="1.6" />
-      <path
-        d="M7.5 7.5l3 8.5M16.5 7.5l-3 8.5M8 6h8"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-      />
     </svg>
   );
 }
