@@ -1,0 +1,22 @@
+{
+  "0":  {"name": "token_only_defi_user",         "confidence": "high",   "validated": false},
+  "1":  {"name": "token_only_transferrer",       "confidence": "high",   "validated": false},
+  "2":  {"name": "phishing_drain_target",        "confidence": "high",   "validated": true},
+  "3":  {"name": "meme_token_degen_trader",      "confidence": "high",   "validated": false},
+  "4":  {"name": "mainstream_net_sender",        "confidence": "low",    "validated": false},
+  "5":  {"name": "phishing_drain_funnel",        "confidence": "high",   "validated": true},
+  "6":  {"name": "simple_plain_eth_eoa",         "confidence": "medium", "validated": false},
+  "7":  {"name": "minter",                       "confidence": "high",   "validated": false},
+  "8":  {"name": "multi_router_defi_bot",        "confidence": "high",   "validated": true},
+  "9":  {"name": "pure_receiver_deposit_addr",   "confidence": "high",   "validated": false},
+  "10": {"name": "pure_receiver_gas_aware",      "confidence": "high",   "validated": false},
+  "11": {"name": "mainstream_holder_transferrer","confidence": "low",    "validated": false},
+  "12": {"name": "plain_eth_holder_funded",      "confidence": "medium", "validated": false},
+  "13": {"name": "token_active_holder_funded",   "confidence": "medium", "validated": false},
+  "14": {"name": "mainstream_variant",           "confidence": "low",    "validated": false},
+  "15": {"name": "occasional_transferrer",       "confidence": "low",    "validated": false},
+  "16": {"name": "dex_aggregator_user",          "confidence": "high",   "validated": true},
+  "17": {"name": "active_dex_trader",            "confidence": "high",   "validated": false},
+  "-1": {"name": "noise_unclustered",            "confidence": "n/a",    "validated": false},
+  "-2": {"name": "not_in_sample",                "confidence": "n/a",    "validated": false}
+}

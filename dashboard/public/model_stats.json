@@ -1,0 +1,9 @@
+{
+  "algo": "HDBSCAN",
+  "n_clusters": 18,
+  "noise_pct": 38.0,
+  "n_features": 26,
+  "sample_size": 633891,
+  "min_cluster_size": 5000,
+  "min_samples": 75
+}

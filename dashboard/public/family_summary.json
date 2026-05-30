@@ -1,0 +1,671 @@
+{
+  "meta": {
+    "total_wallets": 6338908,
+    "total_txns": 511058784,
+    "n_families": 8,
+    "n_clusters": 19,
+    "radar_axes": [
+      "Tx Activity",
+      "Value Flow",
+      "Gas",
+      "Counterparty",
+      "Contract Calls",
+      "Token Activity"
+    ]
+  },
+  "families": {
+    "Bots & Automation": {
+      "wallets": 202064,
+      "pct_wallets": 3.2,
+      "pct_txns": 1.7,
+      "clusters": [
+        8
+      ],
+      "median_txns": 18,
+      "radar_raw": {
+        "Tx Activity": 2.6,
+        "Value Flow": 0.021855723170064924,
+        "Gas": 0.079,
+        "Counterparty": 0.6878330748625405,
+        "Contract Calls": 0.9230769230769231,
+        "Token Activity": 4.0
+      },
+      "separation_top_features": [
+        {
+          "feature": "automation_share",
+          "direction": "up",
+          "z": 4.24
+        },
+        {
+          "feature": "approve_share",
+          "direction": "up",
+          "z": 1.17
+        },
+        {
+          "feature": "selector_entropy",
+          "direction": "up",
+          "z": 0.82
+        }
+      ],
+      "radar": {
+        "Tx Activity": 0.174,
+        "Value Flow": 0.906,
+        "Gas": 0.078,
+        "Counterparty": 0.376,
+        "Contract Calls": 0.917,
+        "Token Activity": 1.0
+      }
+    },
+    "Compromised/Phishing": {
+      "wallets": 158906,
+      "pct_wallets": 2.5,
+      "pct_txns": 0.8,
+      "clusters": [
+        2,
+        5
+      ],
+      "median_txns": 17,
+      "radar_raw": {
+        "Tx Activity": 8.666666666666666,
+        "Value Flow": 0.0,
+        "Gas": 0.006261041,
+        "Counterparty": 1.0,
+        "Contract Calls": 0.36363636363636365,
+        "Token Activity": 1.0
+      },
+      "separation_top_features": [
+        {
+          "feature": "tx_per_active_day",
+          "direction": "up",
+          "z": 1.07
+        },
+        {
+          "feature": "same_block_tx_ratio",
+          "direction": "up",
+          "z": 1.02
+        },
+        {
+          "feature": "volume_asymmetry",
+          "direction": "down",
+          "z": -1.0
+        }
+      ],
+      "radar": {
+        "Tx Activity": 1.0,
+        "Value Flow": 0.0,
+        "Gas": 0.005,
+        "Counterparty": 1.0,
+        "Contract Calls": 0.315,
+        "Token Activity": 0.0
+      }
+    },
+    "DeFi Traders": {
+      "wallets": 1278382,
+      "pct_wallets": 20.2,
+      "pct_txns": 12.4,
+      "clusters": [
+        3,
+        16,
+        17
+      ],
+      "median_txns": 22,
+      "radar_raw": {
+        "Tx Activity": 3.0833333333333335,
+        "Value Flow": 0.00834984981054536,
+        "Gas": 0.19665,
+        "Counterparty": 0.6923076923076923,
+        "Contract Calls": 0.8636363636363636,
+        "Token Activity": 4.0
+      },
+      "separation_top_features": [
+        {
+          "feature": "selector_entropy",
+          "direction": "up",
+          "z": 1.01
+        },
+        {
+          "feature": "swap_general_share",
+          "direction": "up",
+          "z": 0.91
+        },
+        {
+          "feature": "approve_share",
+          "direction": "up",
+          "z": 0.78
+        }
+      ],
+      "radar": {
+        "Tx Activity": 0.24,
+        "Value Flow": 0.346,
+        "Gas": 0.195,
+        "Counterparty": 0.385,
+        "Contract Calls": 0.853,
+        "Token Activity": 1.0
+      }
+    },
+    "Holders & Receivers": {
+      "wallets": 499754,
+      "pct_wallets": 7.9,
+      "pct_txns": 3.6,
+      "clusters": [
+        9,
+        10,
+        12,
+        13
+      ],
+      "median_txns": 18,
+      "radar_raw": {
+        "Tx Activity": 1.3225806451612903,
+        "Value Flow": 0.01001978978227461,
+        "Gas": 1.0,
+        "Counterparty": 1.0,
+        "Contract Calls": 1.0,
+        "Token Activity": 2.0
+      },
+      "separation_top_features": [
+        {
+          "feature": "volume_asymmetry",
+          "direction": "up",
+          "z": 1.53
+        },
+        {
+          "feature": "transfer_share",
+          "direction": "up",
+          "z": 1.08
+        },
+        {
+          "feature": "median_tx_interval_sec",
+          "direction": "up",
+          "z": 1.0
+        }
+      ],
+      "radar": {
+        "Tx Activity": 0.0,
+        "Value Flow": 0.415,
+        "Gas": 1.0,
+        "Counterparty": 1.0,
+        "Contract Calls": 1.0,
+        "Token Activity": 0.333
+      }
+    },
+    "Mainstream/Retail": {
+      "wallets": 1981321,
+      "pct_wallets": 31.3,
+      "pct_txns": 14.7,
+      "clusters": [
+        4,
+        6,
+        11,
+        14,
+        15
+      ],
+      "median_txns": 21,
+      "radar_raw": {
+        "Tx Activity": 2.230769230769231,
+        "Value Flow": 0.0,
+        "Gas": 0.001625159,
+        "Counterparty": 1.0,
+        "Contract Calls": 0.07142857142857142,
+        "Token Activity": 1.0
+      },
+      "separation_top_features": [
+        {
+          "feature": "selector_entropy",
+          "direction": "down",
+          "z": -0.73
+        },
+        {
+          "feature": "contract_call_ratio",
+          "direction": "down",
+          "z": -0.64
+        },
+        {
+          "feature": "counterparty_concentration_top3",
+          "direction": "up",
+          "z": 0.55
+        }
+      ],
+      "radar": {
+        "Tx Activity": 0.124,
+        "Value Flow": 0.0,
+        "Gas": 0.0,
+        "Counterparty": 1.0,
+        "Contract Calls": 0.0,
+        "Token Activity": 0.0
+      }
+    },
+    "Minters": {
+      "wallets": 60496,
+      "pct_wallets": 1.0,
+      "pct_txns": 0.5,
+      "clusters": [
+        7
+      ],
+      "median_txns": 25,
+      "radar_raw": {
+        "Tx Activity": 1.875,
+        "Value Flow": 0.005665751265418505,
+        "Gas": 0.192686315,
+        "Counterparty": 0.5,
+        "Contract Calls": 0.8268856629751571,
+        "Token Activity": 3.0
+      },
+      "separation_top_features": [
+        {
+          "feature": "mint_share",
+          "direction": "up",
+          "z": 5.04
+        },
+        {
+          "feature": "selector_entropy",
+          "direction": "up",
+          "z": 1.46
+        },
+        {
+          "feature": "counterparty_concentration_top3",
+          "direction": "down",
+          "z": -1.34
+        }
+      ],
+      "radar": {
+        "Tx Activity": 0.075,
+        "Value Flow": 0.235,
+        "Gas": 0.191,
+        "Counterparty": 0.0,
+        "Contract Calls": 0.814,
+        "Token Activity": 0.667
+      }
+    },
+    "Token-Only": {
+      "wallets": 226875,
+      "pct_wallets": 3.6,
+      "pct_txns": 1.7,
+      "clusters": [
+        0,
+        1
+      ],
+      "median_txns": 15,
+      "radar_raw": {
+        "Tx Activity": 1.8333333333333333,
+        "Value Flow": 0.0,
+        "Gas": 0.094,
+        "Counterparty": 1.0,
+        "Contract Calls": 1.0,
+        "Token Activity": 1.0
+      },
+      "separation_top_features": [
+        {
+          "feature": "has_eth_volume",
+          "direction": "down",
+          "z": -5.09
+        },
+        {
+          "feature": "transfer_share",
+          "direction": "up",
+          "z": 1.22
+        },
+        {
+          "feature": "contract_call_ratio",
+          "direction": "up",
+          "z": 1.0
+        }
+      ],
+      "radar": {
+        "Tx Activity": 0.07,
+        "Value Flow": 0.0,
+        "Gas": 0.093,
+        "Counterparty": 1.0,
+        "Contract Calls": 1.0,
+        "Token Activity": 0.0
+      }
+    },
+    "Unclassified": {
+      "wallets": 1931110,
+      "pct_wallets": 30.5,
+      "pct_txns": 64.6,
+      "clusters": [
+        -1
+      ],
+      "median_txns": 18,
+      "radar_raw": {
+        "Tx Activity": 2.5,
+        "Value Flow": 0.02411911347586839,
+        "Gas": 0.273093959,
+        "Counterparty": 0.7948717948717948,
+        "Contract Calls": 0.7857142857142857,
+        "Token Activity": 2.0
+      },
+      "separation_top_features": [
+        {
+          "feature": "selector_entropy",
+          "direction": "up",
+          "z": 0.31
+        },
+        {
+          "feature": "volume_asymmetry",
+          "direction": "up",
+          "z": 0.28
+        },
+        {
+          "feature": "counterparty_concentration_top3",
+          "direction": "down",
+          "z": -0.27
+        }
+      ],
+      "radar": {
+        "Tx Activity": 0.16,
+        "Value Flow": 1.0,
+        "Gas": 0.272,
+        "Counterparty": 0.59,
+        "Contract Calls": 0.769,
+        "Token Activity": 0.333
+      }
+    }
+  },
+  "clusters": {
+    "-1": {
+      "name": "noise_unclustered",
+      "family": "Unclassified",
+      "confidence": "n/a",
+      "validated": false,
+      "wallets": 1931110,
+      "pct": 30.5,
+      "median": {
+        "tx_count": 18.0,
+        "unique_peers": 6.0,
+        "in_volume_eth": 0.0241,
+        "volume_asymmetry": -0.0491,
+        "contract_call_ratio": 0.7857,
+        "distinct_tokens": 2.0
+      }
+    },
+    "0": {
+      "name": "token_only_defi_user",
+      "family": "Token-Only",
+      "confidence": "high",
+      "validated": false,
+      "wallets": 78111,
+      "pct": 1.2,
+      "median": {
+        "tx_count": 16.0,
+        "unique_peers": 5.0,
+        "in_volume_eth": 0.0,
+        "volume_asymmetry": NaN,
+        "contract_call_ratio": 1.0,
+        "distinct_tokens": 3.0
+      }
+    },
+    "1": {
+      "name": "token_only_transferrer",
+      "family": "Token-Only",
+      "confidence": "high",
+      "validated": false,
+      "wallets": 148764,
+      "pct": 2.3,
+      "median": {
+        "tx_count": 15.0,
+        "unique_peers": 1.0,
+        "in_volume_eth": 0.0,
+        "volume_asymmetry": NaN,
+        "contract_call_ratio": 1.0,
+        "distinct_tokens": 1.0
+      }
+    },
+    "2": {
+      "name": "phishing_drain_target",
+      "family": "Compromised/Phishing",
+      "confidence": "high",
+      "validated": true,
+      "wallets": 90036,
+      "pct": 1.4,
+      "median": {
+        "tx_count": 16.0,
+        "unique_peers": 5.0,
+        "in_volume_eth": 0.0,
+        "volume_asymmetry": -1.0,
+        "contract_call_ratio": 0.4595,
+        "distinct_tokens": 1.0
+      }
+    },
+    "3": {
+      "name": "meme_token_degen_trader",
+      "family": "DeFi Traders",
+      "confidence": "high",
+      "validated": false,
+      "wallets": 323950,
+      "pct": 5.1,
+      "median": {
+        "tx_count": 22.0,
+        "unique_peers": 6.0,
+        "in_volume_eth": 0.0,
+        "volume_asymmetry": -1.0,
+        "contract_call_ratio": 0.5862,
+        "distinct_tokens": 3.0
+      }
+    },
+    "4": {
+      "name": "mainstream_net_sender",
+      "family": "Mainstream/Retail",
+      "confidence": "low",
+      "validated": false,
+      "wallets": 498524,
+      "pct": 7.9,
+      "median": {
+        "tx_count": 18.0,
+        "unique_peers": 3.0,
+        "in_volume_eth": 0.0,
+        "volume_asymmetry": -1.0,
+        "contract_call_ratio": 0.6364,
+        "distinct_tokens": 1.0
+      }
+    },
+    "5": {
+      "name": "phishing_drain_funnel",
+      "family": "Compromised/Phishing",
+      "confidence": "high",
+      "validated": true,
+      "wallets": 68870,
+      "pct": 1.1,
+      "median": {
+        "tx_count": 18.0,
+        "unique_peers": 1.0,
+        "in_volume_eth": 0.0,
+        "volume_asymmetry": -1.0,
+        "contract_call_ratio": 0.0,
+        "distinct_tokens": 0.0
+      }
+    },
+    "6": {
+      "name": "simple_plain_eth_eoa",
+      "family": "Mainstream/Retail",
+      "confidence": "medium",
+      "validated": false,
+      "wallets": 761627,
+      "pct": 12.0,
+      "median": {
+        "tx_count": 23.0,
+        "unique_peers": 1.0,
+        "in_volume_eth": 0.0,
+        "volume_asymmetry": -1.0,
+        "contract_call_ratio": 0.0,
+        "distinct_tokens": 0.0
+      }
+    },
+    "7": {
+      "name": "minter",
+      "family": "Minters",
+      "confidence": "high",
+      "validated": false,
+      "wallets": 60496,
+      "pct": 1.0,
+      "median": {
+        "tx_count": 25.0,
+        "unique_peers": 14.0,
+        "in_volume_eth": 0.0057,
+        "volume_asymmetry": -0.1553,
+        "contract_call_ratio": 0.8269,
+        "distinct_tokens": 3.0
+      }
+    },
+    "8": {
+      "name": "multi_router_defi_bot",
+      "family": "Bots & Automation",
+      "confidence": "high",
+      "validated": true,
+      "wallets": 202064,
+      "pct": 3.2,
+      "median": {
+        "tx_count": 18.0,
+        "unique_peers": 8.0,
+        "in_volume_eth": 0.0219,
+        "volume_asymmetry": -0.4991,
+        "contract_call_ratio": 0.9231,
+        "distinct_tokens": 4.0
+      }
+    },
+    "9": {
+      "name": "pure_receiver_deposit_addr",
+      "family": "Holders & Receivers",
+      "confidence": "high",
+      "validated": false,
+      "wallets": 206311,
+      "pct": 3.3,
+      "median": {
+        "tx_count": 17.0,
+        "unique_peers": 1.0,
+        "in_volume_eth": 0.0012,
+        "volume_asymmetry": 1.0,
+        "contract_call_ratio": 1.0,
+        "distinct_tokens": 2.0
+      }
+    },
+    "10": {
+      "name": "pure_receiver_gas_aware",
+      "family": "Holders & Receivers",
+      "confidence": "high",
+      "validated": false,
+      "wallets": 113228,
+      "pct": 1.8,
+      "median": {
+        "tx_count": 18.0,
+        "unique_peers": 1.0,
+        "in_volume_eth": 0.0033,
+        "volume_asymmetry": 1.0,
+        "contract_call_ratio": 1.0,
+        "distinct_tokens": 4.0
+      }
+    },
+    "11": {
+      "name": "mainstream_holder_transferrer",
+      "family": "Mainstream/Retail",
+      "confidence": "low",
+      "validated": false,
+      "wallets": 218859,
+      "pct": 3.5,
+      "median": {
+        "tx_count": 20.0,
+        "unique_peers": 3.0,
+        "in_volume_eth": 0.0401,
+        "volume_asymmetry": 0.0049,
+        "contract_call_ratio": 0.8824,
+        "distinct_tokens": 6.0
+      }
+    },
+    "12": {
+      "name": "plain_eth_holder_funded",
+      "family": "Holders & Receivers",
+      "confidence": "medium",
+      "validated": false,
+      "wallets": 67066,
+      "pct": 1.1,
+      "median": {
+        "tx_count": 18.0,
+        "unique_peers": 2.0,
+        "in_volume_eth": 0.9679,
+        "volume_asymmetry": 0.0002,
+        "contract_call_ratio": 0.0,
+        "distinct_tokens": 0.0
+      }
+    },
+    "13": {
+      "name": "token_active_holder_funded",
+      "family": "Holders & Receivers",
+      "confidence": "medium",
+      "validated": false,
+      "wallets": 113149,
+      "pct": 1.8,
+      "median": {
+        "tx_count": 22.0,
+        "unique_peers": 6.0,
+        "in_volume_eth": 2.685,
+        "volume_asymmetry": 0.0,
+        "contract_call_ratio": 0.0339,
+        "distinct_tokens": 5.0
+      }
+    },
+    "14": {
+      "name": "mainstream_variant",
+      "family": "Mainstream/Retail",
+      "confidence": "low",
+      "validated": false,
+      "wallets": 219766,
+      "pct": 3.5,
+      "median": {
+        "tx_count": 22.0,
+        "unique_peers": 2.0,
+        "in_volume_eth": 1.752,
+        "volume_asymmetry": 0.0001,
+        "contract_call_ratio": 0.0,
+        "distinct_tokens": 1.0
+      }
+    },
+    "15": {
+      "name": "occasional_transferrer",
+      "family": "Mainstream/Retail",
+      "confidence": "low",
+      "validated": false,
+      "wallets": 282545,
+      "pct": 4.5,
+      "median": {
+        "tx_count": 21.0,
+        "unique_peers": 3.0,
+        "in_volume_eth": 0.0496,
+        "volume_asymmetry": 0.0093,
+        "contract_call_ratio": 0.8,
+        "distinct_tokens": 2.0
+      }
+    },
+    "16": {
+      "name": "dex_aggregator_user",
+      "family": "DeFi Traders",
+      "confidence": "high",
+      "validated": true,
+      "wallets": 556909,
+      "pct": 8.8,
+      "median": {
+        "tx_count": 22.0,
+        "unique_peers": 11.0,
+        "in_volume_eth": 0.0124,
+        "volume_asymmetry": -0.4248,
+        "contract_call_ratio": 0.9231,
+        "distinct_tokens": 5.0
+      }
+    },
+    "17": {
+      "name": "active_dex_trader",
+      "family": "DeFi Traders",
+      "confidence": "high",
+      "validated": false,
+      "wallets": 397523,
+      "pct": 6.3,
+      "median": {
+        "tx_count": 21.0,
+        "unique_peers": 8.0,
+        "in_volume_eth": 0.0501,
+        "volume_asymmetry": -0.5475,
+        "contract_call_ratio": 0.9,
+        "distinct_tokens": 5.0
+      }
+    }
+  }
+}
