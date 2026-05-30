@@ -9,6 +9,7 @@ type NavItem = {
   icon: ComponentType<{ className?: string }>;
   end?: boolean;
   accent?: boolean; // emerald "Live" treatment — the realtime landing page
+  disabled?: boolean; // shown but inert in the nav — page still WIP, route stays live
 };
 
 const items: NavItem[] = [
@@ -17,7 +18,7 @@ const items: NavItem[] = [
   { to: "/archetypes", label: "Archetypes", icon: HiveIcon },
   { to: "/feature-space", label: "Feature Space", icon: AxisIcon },
   { to: "/wallets", label: "Wallet Inspector", icon: WalletIcon },
-  { to: "/anomaly", label: "Anomaly Detection", icon: AlertIcon },
+  { to: "/anomaly", label: "Anomaly Detection", icon: AlertIcon, disabled: true },
 ];
 
 // The accent ("Live") nav item carries a status dot driven by the real SSE connection
@@ -49,11 +50,30 @@ export default function Sidebar() {
           </div>
         </div>
         <nav className="mt-2 flex flex-col gap-[2px] px-3">
-          {items.map((it) => (
-            <NavLink
-              key={it.to}
-              to={it.to}
-              end={it.end}
+          {items.map((it) => {
+            if (it.disabled) {
+              return (
+                <div
+                  key={it.to}
+                  aria-disabled="true"
+                  title="Disabled for now — work in progress"
+                  className="group flex cursor-not-allowed select-none items-center justify-between rounded-md px-3 py-2 text-[13.5px] text-muted opacity-40"
+                >
+                  <span className="flex items-center gap-3">
+                    <it.icon className="h-4 w-4 text-muted" />
+                    {it.label}
+                  </span>
+                  <span className="rounded bg-panel2 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-muted">
+                    Soon
+                  </span>
+                </div>
+              );
+            }
+            return (
+              <NavLink
+                key={it.to}
+                to={it.to}
+                end={it.end}
               className={({ isActive }) =>
                 [
                   "group flex items-center justify-between rounded-md px-3 py-2 text-[13.5px] transition",
@@ -93,8 +113,9 @@ export default function Sidebar() {
                   )}
                 </>
               )}
-            </NavLink>
-          ))}
+              </NavLink>
+            );
+          })}
         </nav>
       </div>
 
