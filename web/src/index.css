@@ -26,3 +26,49 @@ body {
     transparent
   );
 }
+
+/* Single-line classification ticker. The track holds the row set twice; translating
+   it -50% scrolls one full copy past, then snaps back seamlessly. Duration is set
+   inline (scales with row count). Hover pauses so a viewer can read an entry. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* One-shot expanding ring stamped at the EKG's leading edge when a new block lands. */
+@keyframes ekg-blip {
+  from {
+    r: 2;
+    opacity: 0.85;
+  }
+  to {
+    r: 13;
+    opacity: 0;
+  }
+}
+.ekg-blip {
+  animation: ekg-blip 0.7s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  .ekg-blip {
+    animation: none;
+    opacity: 0;
+  }
+}
