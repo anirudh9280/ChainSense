@@ -390,7 +390,7 @@
         "tx_count": 16.0,
         "unique_peers": 5.0,
         "in_volume_eth": 0.0,
-        "volume_asymmetry": NaN,
+        "volume_asymmetry": null,
         "contract_call_ratio": 1.0,
         "distinct_tokens": 3.0
       }
@@ -406,7 +406,7 @@
         "tx_count": 15.0,
         "unique_peers": 1.0,
         "in_volume_eth": 0.0,
-        "volume_asymmetry": NaN,
+        "volume_asymmetry": null,
         "contract_call_ratio": 1.0,
         "distinct_tokens": 1.0
       }
