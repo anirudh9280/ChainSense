@@ -10,6 +10,7 @@ import {
 import { familyColor } from "../lib/families";
 import PageHeader from "../components/PageHeader";
 import InsightBanner from "../components/InsightBanner";
+import { API } from "../lib/api";
 
 // Authoritative per-wallet facts come from the backend (it owns the protected
 // LUT + feature parquets). The browser only ever resolves the *public*
@@ -35,7 +36,7 @@ type FetchState = "idle" | "loading" | "notfound" | "error";
 const ADDR_RE = /^0x[0-9a-fA-F]{40}$/;
 
 async function fetchWallet(addr: string): Promise<WalletDetail | "notfound"> {
-  const res = await fetch(`/api/wallet/${addr}`);
+  const res = await fetch(`${API}/api/wallet/${addr}`);
   if (res.status === 404) return "notfound";
   if (!res.ok) throw new Error(`/api/wallet ${res.status}`);
   return (await res.json()) as WalletDetail;

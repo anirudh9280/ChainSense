@@ -7,6 +7,7 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import type { LivePoint } from "../components/LiveStackedChart";
 import type { TickPoint } from "../components/LiveTicker";
+import { API } from "./api";
 
 export type BlockEv = { number: number; txCount: number; senderCount: number; finalityLag: number; ts: number };
 export type Counts = Record<string, number>;
@@ -46,7 +47,7 @@ export function LiveStreamProvider({ children }: { children: ReactNode }) {
   const seqRef = useRef(0);
 
   useEffect(() => {
-    const es = new EventSource("/api/stream");
+    const es = new EventSource(`${API}/api/stream`);
 
     es.onopen = () => setConn("live");
     es.addEventListener("hello", () => setConn("live"));

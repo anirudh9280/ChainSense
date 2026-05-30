@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API } from "../lib/api";
 
 // The Live page "News Feed": crypto headlines pulled from TheBlock + CoinDesk RSS and
 // summarized into a small HTML list by a local Ollama model (llama3.2), served by the
@@ -27,7 +28,7 @@ export default function NewsFeed() {
 
   useEffect(() => {
     let alive = true;
-    fetch("/api/news")
+    fetch(`${API}/api/news`)
       .then((r) => (r.ok ? (r.json() as Promise<NewsResp>) : Promise.reject(new Error(`/api/news: ${r.status}`))))
       .then((d) => alive && setData(d))
       .catch((e) => alive && setError(String(e)));
