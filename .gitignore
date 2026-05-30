@@ -13,3 +13,8 @@ analyst_data/smart_money_token_transfers.parquet
 notebooks/08_analyst.ipynb
 pyproject.toml
 uv.lock
+node_modules/
+web/node_modules/
+web/tsconfig.tsbuildinfo
+web/dist/
+.vite/
