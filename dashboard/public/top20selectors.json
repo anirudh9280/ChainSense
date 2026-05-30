@@ -1,0 +1,24 @@
+{
+  "top_selectors": [
+    {"rank": 1,  "selector": "0xa9059cbb", "signature": "transfer(address,uint256)", "meaning": "ERC-20 token send", "bucket": "transfer_share", "verified": true},
+    {"rank": 2,  "selector": "0x095ea7b3", "signature": "approve(address,uint256)", "meaning": "ERC-20 spender approval", "bucket": "approve_share", "verified": true},
+    {"rank": 3,  "selector": "0x64617461", "signature": "unknown (ASCII 'data')", "meaning": "spam selector / generated collision", "bucket": "dropped", "verified": false},
+    {"rank": 4,  "selector": "0x3593564c", "signature": "execute(bytes,bytes[],uint256)", "meaning": "Uniswap Universal Router", "bucket": "swap_general_share", "verified": true},
+    {"rank": 5,  "selector": "0x23b872dd", "signature": "transferFrom(address,address,uint256)", "meaning": "ERC-20 delegated transfer", "bucket": "transfer_share", "verified": true},
+    {"rank": 6,  "selector": "0x2213bc0b", "signature": "exec(address,address,uint256,address,bytes)", "meaning": "generic proxy/forwarder execution", "bucket": "automation_share", "verified": false},
+    {"rank": 7,  "selector": "0x791ac947", "signature": "swapExactTokensForETHSupportingFeeOnTransferTokens(...)", "meaning": "Uniswap V2 meme/tax-token sell", "bucket": "swap_meme_share", "verified": true},
+    {"rank": 8,  "selector": "0x78e111f6", "signature": "executeFFsYo(address,bytes)", "meaning": "MEV bot / custom executor", "bucket": "flag_has_mev", "verified": false},
+    {"rank": 9,  "selector": "0x5f575529", "signature": "swap(string,address,uint256,bytes)", "meaning": "custom DEX-router swap", "bucket": "swap_general_share", "verified": false},
+    {"rank": 10, "selector": "0x0162e2d0", "signature": "swapETHForExactTokens(uint256[],address[],address,uint256,...)", "meaning": "custom/sniper swap router", "bucket": "swap_general_share", "verified": false},
+    {"rank": 11, "selector": "0x765e827f", "signature": "handleOps((address,uint256,bytes,...)[],address)", "meaning": "ERC-4337 account-abstraction bundler", "bucket": "flag_has_aa", "verified": true},
+    {"rank": 12, "selector": "0xb6f9de95", "signature": "swapExactETHForTokensSupportingFeeOnTransferTokens(...)", "meaning": "Uniswap V2 ETH->token (meme/tax)", "bucket": "swap_meme_share", "verified": true},
+    {"rank": 13, "selector": "0xb143044b", "signature": "execute((uint32,address,bytes,uint256,bytes)[])", "meaning": "batch multi-call execution", "bucket": "automation_share", "verified": false},
+    {"rank": 14, "selector": "0x00000000", "signature": "empty / fallback", "meaning": "fallback receive / probe", "bucket": "dropped", "verified": true},
+    {"rank": 15, "selector": "0xa0000000", "signature": "unknown", "meaning": "spam / scanner probe", "bucket": "dropped", "verified": false},
+    {"rank": 16, "selector": "0x1249c58b", "signature": "mint()", "meaning": "NFT/token minting", "bucket": "mint_share", "verified": true},
+    {"rank": 17, "selector": "0x7ff36ab5", "signature": "swapExactETHForTokens(uint256,address[],address,uint256)", "meaning": "classic Uniswap V2 ETH->token", "bucket": "swap_general_share", "verified": true},
+    {"rank": 18, "selector": "0x12aa3caf", "signature": "swap(...)", "meaning": "1inch Aggregation Router v4", "bucket": "swap_agg_share", "verified": true},
+    {"rank": 19, "selector": "0x07ed2379", "signature": "swap(...)", "meaning": "1inch swap variant", "bucket": "swap_agg_share", "verified": true},
+    {"rank": 20, "selector": "0x771d503f", "signature": "unknown", "meaning": "unresolved", "bucket": "dropped", "verified": false}
+  ]
+}
