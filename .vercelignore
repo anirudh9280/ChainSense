@@ -1,0 +1,5 @@
+# Frontend-only deploy: the Vercel project's Root Directory is `web/`.
+# Ignore everything at the repo root except web/, so the huge parquet
+# datasets (analyst_data/, backend/data/) and notebooks never get uploaded.
+/*
+!/web
