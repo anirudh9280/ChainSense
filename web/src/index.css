@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-feature-settings: "cv11", "ss01", "ss03";
+}
+
+.font-num {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-feature-settings: "tnum", "zero";
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+}
