@@ -1,0 +1,115 @@
+erDiagram
+    direction LR
+    blocks ||--o{ transactions : "block_number / block_hash"
+    transactions ||--o{ logs : "transaction_hash"
+    transactions ||--o{ traces : "transaction_hash"
+    logs ||--o| token_transfers : "transaction_hash + log_index"
+    transactions ||--o| contracts : "receipt_contract_address"
+    token_transfers }o--|| tokens : "token_address"
+
+    blocks {
+        TIMESTAMP timestamp "PARTITION (DAY)"
+        INTEGER number PK
+        STRING hash
+        STRING parent_hash
+        STRING miner
+        NUMERIC difficulty
+        NUMERIC total_difficulty
+        INTEGER size
+        INTEGER gas_limit
+        INTEGER gas_used
+        INTEGER base_fee_per_gas
+        INTEGER transaction_count
+        RECORD withdrawals "repeated"
+        INTEGER blob_gas_used
+        INTEGER excess_blob_gas
+    }
+
+    transactions {
+        STRING hash PK
+        INTEGER block_number FK
+        STRING block_hash FK
+        TIMESTAMP block_timestamp "PARTITION (DAY)"
+        INTEGER transaction_index
+        INTEGER nonce
+        STRING from_address
+        STRING to_address
+        NUMERIC value
+        INTEGER gas
+        INTEGER gas_price
+        INTEGER max_fee_per_gas
+        INTEGER max_priority_fee_per_gas
+        INTEGER transaction_type
+        STRING input
+        INTEGER receipt_cumulative_gas_used
+        INTEGER receipt_gas_used
+        STRING receipt_contract_address
+        INTEGER receipt_status
+        INTEGER receipt_effective_gas_price
+    }
+
+    logs {
+        INTEGER log_index
+        STRING transaction_hash FK
+        INTEGER transaction_index
+        STRING address
+        STRING data
+        STRING topics "repeated"
+        INTEGER block_number
+        STRING block_hash
+        TIMESTAMP block_timestamp "PARTITION (DAY)"
+    }
+
+    token_transfers {
+        STRING token_address FK
+        STRING from_address
+        STRING to_address
+        STRING value "STRING, can overflow NUMERIC"
+        STRING transaction_hash FK
+        INTEGER log_index FK
+        INTEGER block_number
+        STRING block_hash
+        TIMESTAMP block_timestamp "PARTITION (DAY)"
+    }
+
+    traces {
+        STRING transaction_hash FK
+        INTEGER transaction_index
+        STRING from_address
+        STRING to_address
+        NUMERIC value
+        STRING input
+        STRING output
+        STRING trace_type
+        STRING call_type
+        STRING reward_type
+        INTEGER gas
+        INTEGER gas_used
+        INTEGER subtraces
+        STRING trace_address
+        STRING error
+        INTEGER status
+        STRING trace_id
+        INTEGER block_number
+        TIMESTAMP block_timestamp "PARTITION (DAY)"
+    }
+
+    contracts {
+        STRING address PK
+        STRING bytecode
+        STRING function_sighashes "repeated"
+        BOOLEAN is_erc20
+        BOOLEAN is_erc721
+        INTEGER block_number
+        TIMESTAMP block_timestamp "PARTITION (DAY)"
+    }
+
+    tokens {
+        STRING address PK
+        STRING symbol
+        STRING name
+        STRING decimals "STRING (dirty data)"
+        STRING total_supply
+        INTEGER block_number
+        TIMESTAMP block_timestamp "PARTITION (DAY)"
+    }
