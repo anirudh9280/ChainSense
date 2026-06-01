@@ -22,3 +22,5 @@ dashboard/public/activity_timeseries.json
 /backend/data
 .vercel
 .env*
+/notebooks/.tmp
+/presentation

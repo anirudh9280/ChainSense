@@ -5,6 +5,7 @@ import Archetypes from "./pages/Archetypes";
 import FeatureSpace from "./pages/FeatureSpace";
 import Wallets from "./pages/Wallets";
 import AnomalyDetection from "./pages/AnomalyDetection";
+import SignalValidation from "./pages/SignalValidation";
 import RealtimeClassifier from "./pages/RealtimeClassifier";
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="feature-space" element={<FeatureSpace />} />
         <Route path="wallets" element={<Wallets />} />
         <Route path="anomaly" element={<AnomalyDetection />} />
+        <Route path="signal-validation" element={<SignalValidation />} />
       </Route>
     </Routes>
   );

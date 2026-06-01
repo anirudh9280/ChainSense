@@ -19,6 +19,7 @@ const items: NavItem[] = [
   { to: "/feature-space", label: "Feature Space", icon: AxisIcon },
   { to: "/wallets", label: "Wallet Inspector", icon: WalletIcon },
   { to: "/anomaly", label: "Anomaly Detection", icon: AlertIcon, disabled: true },
+  { to: "/signal-validation", label: "Signal Validation", icon: ShieldCheckIcon },
 ];
 
 // The accent ("Live") nav item carries a status dot driven by the real SSE connection
@@ -188,6 +189,25 @@ function PulseIcon({ className = "" }) {
     <svg viewBox="0 0 24 24" fill="none" className={className}>
       <path
         d="M3 12h4l2-6 4 12 2-6h6"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+function ShieldCheckIcon({ className = "" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path
+        d="M12 3l7 3v5c0 4.5-2.9 7.6-7 9-4.1-1.4-7-4.5-7-9V6l7-3z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 12l2 2 4-4"
         stroke="currentColor"
         strokeWidth="1.6"
         strokeLinecap="round"
