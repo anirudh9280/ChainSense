@@ -67,7 +67,7 @@ def effective_label(lut: dict):
     return int(lut["cluster_xgb"]), {"score": lut.get("xgb_conf"), "basis": "xgboost"}
 
 app = FastAPI(title="ChainSense API")
-app.add_middleware(CORSMiddleware, allow_origins=["https://chainsense-eth.vercel.app"], allow_methods=["GET"])
+app.add_middleware(CORSMiddleware, allow_origins=["https://ucsd-chainsense.vercel.app"], allow_methods=["GET"])
 
 
 @app.on_event("startup")
