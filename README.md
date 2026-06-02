@@ -2,9 +2,11 @@
 
 > Behavioral segmentation of Ethereum wallets — discovering archetypes from on-chain activity alone.
 
-![head](head.png)
+<p align="center">
+  <img src="docs/umap.png" alt="UMAP projection of Ethereum wallets, colored by behavioral cluster" width="520">
+</p>
 
-[Live dashboard](https://chainsense-eth.vercel.app)
+[Live dashboard](https://ucsd-chainsense.vercel.app)
 
 ## Overview
 
@@ -36,25 +38,31 @@ BigQuery (Ethereum public dataset) → bronze → silver → gold → HDBSCAN �
 ## Project structure
 
 ```
-backend/     FastAPI + DuckDB API, live SSE producer
-web/         React + Vite + TypeScript dashboard
-notebooks/   pipeline, from raw data to model
+pipeline/    extract · transform · classify + FastAPI/DuckDB API and live SSE (run.py)
+dashboard/   React + Vite + TypeScript dashboard
+notebooks/   modeling pipeline, from raw data to model
 data/        medallion Parquet layers (gitignored)
-scripts/     frontend data builders
+docs/        figures, slides, meeting notes
 ```
 
 ## Running locally
 
+Start the backend (`python pipeline/run.py`) to bring up extract + transform + classify and the API on `:8001`, then start the frontend (`cd dashboard && npm run dev`) and open the printed Vite URL (default http://localhost:5173). The dev server proxies `/api` to the backend, so the live feed works out of the box once `ALCHEMY_KEY` is set.
+
 ```bash
-# backend — FastAPI + DuckDB
+# backend — extract + transform + classify + FastAPI, one process
 pip install -r requirements.txt
 export ALCHEMY_KEY=...            # required for the live feed
-uvicorn backend.app:app --port 8000
+python pipeline/run.py           # API on http://127.0.0.1:8001
 
-# frontend — React + Vite (proxies /api → :8000)
-cd web && npm install && npm run dev
+# frontend — React + Vite (proxies /api → :8001)
+cd dashboard && npm install && npm run dev
 ```
 
 ## Stack
 
 Python · DuckDB · pandas · HDBSCAN · UMAP · XGBoost · FastAPI · React · Vite · TypeScript · Tailwind · Alchemy
+
+## Team
+
+Chris Kim · Laksh Goyal · Devang Pant · Ojas Dessai
