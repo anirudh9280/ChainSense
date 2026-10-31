@@ -43,6 +43,7 @@ export default function AppShell() {
 
         {/* pt-16 clears the fixed mobile top bar; md:py-6 restores the exact desktop padding. */}
         <main className="min-w-0 flex-1 overflow-y-auto px-4 pb-6 pt-16 md:px-8 md:py-6">
+          <nav className="mb-4 text-right text-sm" aria-label="Project source"><a href="https://github.com/anirudh9280/ChainSense" target="_blank" rel="noopener noreferrer" className="text-fg underline">GitHub</a></nav>
           <Outlet />
         </main>
       </div>
